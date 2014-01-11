@@ -1,0 +1,394 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:s="http://jboss.com/products/seam/taglib"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:rich="http://richfaces.org/rich"
+    template="../layout/template.xhtml">
+
+<ui:define name="body">
+
+    <rich:panel>
+        <f:facet name="header">Tipo combustivel Details</f:facet>
+
+
+        <s:decorate id="tipoCombustivel" template="../layout/display.xhtml">
+            <ui:define name="label">Tipo combustivel</ui:define>
+            <h:outputText value="#{tipoCombustivelHome.instance.tipoCombustivel}"/>
+        </s:decorate>
+
+        <div style="clear:both"/>
+
+    </rich:panel>
+
+    <div class="actionButtons">
+
+        <s:button view="/TipoCombustivelEdit.xhtml"
+                    id="edit"
+                 value="Edit"/>
+
+        <s:button view="/#{empty tipoCombustivelFrom ? 'TipoCombustivelList' : tipoCombustivelFrom}.xhtml"
+                    id="done"
+                 value="Done"/>
+
+    </div>
+
+    <rich:tabPanel switchType="ajax">
+
+    <rich:tab>
+        <f:facet name="label">
+            <h:panelGroup><h:graphicImage value="/img/onetomany.gif" style="vertical-align: middle; padding-right: 4px;"/>Gastoses</h:panelGroup>
+        </f:facet>
+    <h:form styleClass="association" id="gastosesChildren">
+
+        <h:outputText value="There are no gastoses associated with this tipoCombustivel."
+                   rendered="#{empty tipoCombustivelHome.gastoses}"/>
+
+        <rich:dataTable value="#{tipoCombustivelHome.gastoses}"
+                       var="_gastos"
+                  rendered="#{not empty tipoCombustivelHome.gastoses}"
+                rowClasses="rvgRowOne,rvgRowTwo"
+                        id="gastosesTable">
+            <rich:column sortBy="#{_gastos.idGasto}">
+                <f:facet name="header">Id gasto</f:facet>
+                <h:outputText value="#{_gastos.idGasto}"/>
+            </rich:column>
+            <rich:column sortBy="#{_gastos.data}">
+                <f:facet name="header">Data</f:facet>
+                <h:outputText value="#{_gastos.data}">
+                    <s:convertDateTime type="date" dateStyle="short"/>
+                </h:outputText>
+            </rich:column>
+            <rich:column sortBy="#{_gastos.lotado}">
+                <f:facet name="header">Lotado</f:facet>
+                <h:outputText value="#{_gastos.lotado}"/>
+            </rich:column>
+            <rich:column sortBy="#{_gastos.odometro}">
+                <f:facet name="header">Odometro</f:facet>
+                <h:outputText value="#{_gastos.odometro}"/>
+            </rich:column>
+            <rich:column sortBy="#{_gastos.qtd}">
+                <f:facet name="header">Qtd</f:facet>
+                <h:outputText value="#{_gastos.qtd}"/>
+            </rich:column>
+            <rich:column sortBy="#{_gastos.tipoGasto}">
+                <f:facet name="header">Tipo gasto</f:facet>
+                <h:outputText value="#{_gastos.tipoGasto}"/>
+            </rich:column>
+            <rich:column sortBy="#{_gastos.valor}">
+                <f:facet name="header">Valor</f:facet>
+                <h:outputText value="#{_gastos.valor}"/>
+            </rich:column>
+            <h:column>
+                <f:facet name="header">Action</f:facet>
+                <s:link id="selectgastos"
+                     value="Select"
+                      view="/Gastos.xhtml">
+                    <f:param name="gastosIdGasto"
+                            value="#{_gastos.idGasto}"/>
+                    <f:param name="gastosFrom" value="TipoCombustivel"/>
+                </s:link>
+            </h:column>
+        </rich:dataTable>
+
+    </h:form>
+
+    <div class="actionButtons">
+        <s:button
+               value="Add gastos"
+                view="/GastosEdit.xhtml">
+            <f:param name="tipoCombustivelIdCombustivel"
+                    value="#{tipoCombustivelHome.instance.idCombustivel}"/>
+            <f:param name="gastosFrom" value="TipoCombustivel"/>
+        </s:button>
+    </div>
+    </rich:tab>
+
+    <rich:tab>
+        <f:facet name="label">
+            <h:panelGroup><h:graphicImage value="/img/onetomany.gif" style="vertical-align: middle; padding-right: 4px;"/>Gastoses_1</h:panelGroup>
+        </f:facet>
+    <h:form styleClass="association" id="gastoses_1Children">
+
+        <h:outputText value="There are no gastoses_1 associated with this tipoCombustivel."
+                   rendered="#{empty tipoCombustivelHome.gastoses_1}"/>
+
+        <rich:dataTable value="#{tipoCombustivelHome.gastoses_1}"
+                       var="_gastos"
+                  rendered="#{not empty tipoCombustivelHome.gastoses_1}"
+                rowClasses="rvgRowOne,rvgRowTwo"
+                        id="gastoses_1Table">
+            <rich:column sortBy="#{_gastos.idGasto}">
+                <f:facet name="header">Id gasto</f:facet>
+                <h:outputText value="#{_gastos.idGasto}"/>
+            </rich:column>
+            <rich:column sortBy="#{_gastos.data}">
+                <f:facet name="header">Data</f:facet>
+                <h:outputText value="#{_gastos.data}">
+                    <s:convertDateTime type="date" dateStyle="short"/>
+                </h:outputText>
+            </rich:column>
+            <rich:column sortBy="#{_gastos.lotado}">
+                <f:facet name="header">Lotado</f:facet>
+                <h:outputText value="#{_gastos.lotado}"/>
+            </rich:column>
+            <rich:column sortBy="#{_gastos.odometro}">
+                <f:facet name="header">Odometro</f:facet>
+                <h:outputText value="#{_gastos.odometro}"/>
+            </rich:column>
+            <rich:column sortBy="#{_gastos.qtd}">
+                <f:facet name="header">Qtd</f:facet>
+                <h:outputText value="#{_gastos.qtd}"/>
+            </rich:column>
+            <rich:column sortBy="#{_gastos.tipoGasto}">
+                <f:facet name="header">Tipo gasto</f:facet>
+                <h:outputText value="#{_gastos.tipoGasto}"/>
+            </rich:column>
+            <rich:column sortBy="#{_gastos.valor}">
+                <f:facet name="header">Valor</f:facet>
+                <h:outputText value="#{_gastos.valor}"/>
+            </rich:column>
+            <h:column>
+                <f:facet name="header">Action</f:facet>
+                <s:link id="selectgastos"
+                     value="Select"
+                      view="/Gastos.xhtml">
+                    <f:param name="gastosIdGasto"
+                            value="#{_gastos.idGasto}"/>
+                    <f:param name="gastosFrom" value="TipoCombustivel"/>
+                </s:link>
+            </h:column>
+        </rich:dataTable>
+
+    </h:form>
+
+    <div class="actionButtons">
+        <s:button
+               value="Add gastos"
+                view="/GastosEdit.xhtml">
+            <f:param name="tipoCombustivelIdCombustivel"
+                    value="#{tipoCombustivelHome.instance.idCombustivel}"/>
+            <f:param name="gastosFrom" value="TipoCombustivel"/>
+        </s:button>
+    </div>
+    </rich:tab>
+
+    <rich:tab>
+        <f:facet name="label">
+            <h:panelGroup><h:graphicImage value="/img/onetomany.gif" style="vertical-align: middle; padding-right: 4px;"/>Veiculos</h:panelGroup>
+        </f:facet>
+    <h:form styleClass="association" id="veiculosChildren">
+
+        <h:outputText value="There are no veiculos associated with this tipoCombustivel."
+                   rendered="#{empty tipoCombustivelHome.veiculos}"/>
+
+        <rich:dataTable value="#{tipoCombustivelHome.veiculos}"
+                       var="_veiculo"
+                  rendered="#{not empty tipoCombustivelHome.veiculos}"
+                rowClasses="rvgRowOne,rvgRowTwo"
+                        id="veiculosTable">
+            <rich:column sortBy="#{_veiculo.idVeiculo}">
+                <f:facet name="header">Id veiculo</f:facet>
+                <h:outputText value="#{_veiculo.idVeiculo}"/>
+            </rich:column>
+            <rich:column sortBy="#{_veiculo.adquiridoDe}">
+                <f:facet name="header">Adquirido de</f:facet>
+                <h:outputText value="#{_veiculo.adquiridoDe}"/>
+            </rich:column>
+            <rich:column sortBy="#{_veiculo.anoFabricacao}">
+                <f:facet name="header">Ano fabricacao</f:facet>
+                <h:outputText value="#{_veiculo.anoFabricacao}"/>
+            </rich:column>
+            <rich:column sortBy="#{_veiculo.anoModelo}">
+                <f:facet name="header">Ano modelo</f:facet>
+                <h:outputText value="#{_veiculo.anoModelo}"/>
+            </rich:column>
+            <rich:column sortBy="#{_veiculo.chassi}">
+                <f:facet name="header">Chassi</f:facet>
+                <h:outputText value="#{_veiculo.chassi}"/>
+            </rich:column>
+            <rich:column sortBy="#{_veiculo.codRenavam}">
+                <f:facet name="header">Cod renavam</f:facet>
+                <h:outputText value="#{_veiculo.codRenavam}"/>
+            </rich:column>
+            <rich:column sortBy="#{_veiculo.dataCadastro}">
+                <f:facet name="header">Data cadastro</f:facet>
+                <h:outputText value="#{_veiculo.dataCadastro}">
+                    <s:convertDateTime type="date" dateStyle="short"/>
+                </h:outputText>
+            </rich:column>
+            <rich:column sortBy="#{_veiculo.dataDeAquisicao}">
+                <f:facet name="header">Data de aquisicao</f:facet>
+                <h:outputText value="#{_veiculo.dataDeAquisicao}">
+                    <s:convertDateTime type="date" dateStyle="short"/>
+                </h:outputText>
+            </rich:column>
+            <rich:column sortBy="#{_veiculo.idServidor}">
+                <f:facet name="header">Id servidor</f:facet>
+                <h:outputText value="#{_veiculo.idServidor}"/>
+            </rich:column>
+            <rich:column sortBy="#{_veiculo.modalidadeAquisicao}">
+                <f:facet name="header">Modalidade aquisicao</f:facet>
+                <h:outputText value="#{_veiculo.modalidadeAquisicao}"/>
+            </rich:column>
+            <rich:column sortBy="#{_veiculo.numPatrimonio}">
+                <f:facet name="header">Num patrimonio</f:facet>
+                <h:outputText value="#{_veiculo.numPatrimonio}"/>
+            </rich:column>
+            <rich:column sortBy="#{_veiculo.observacao}">
+                <f:facet name="header">Observacao</f:facet>
+                <h:outputText value="#{_veiculo.observacao}"/>
+            </rich:column>
+            <rich:column sortBy="#{_veiculo.placaAnterior}">
+                <f:facet name="header">Placa anterior</f:facet>
+                <h:outputText value="#{_veiculo.placaAnterior}"/>
+            </rich:column>
+            <rich:column sortBy="#{_veiculo.placaAtual}">
+                <f:facet name="header">Placa atual</f:facet>
+                <h:outputText value="#{_veiculo.placaAtual}"/>
+            </rich:column>
+            <rich:column sortBy="#{_veiculo.potencia}">
+                <f:facet name="header">Potencia</f:facet>
+                <h:outputText value="#{_veiculo.potencia}"/>
+            </rich:column>
+            <rich:column sortBy="#{_veiculo.valorDaAquisicao}">
+                <f:facet name="header">Valor da aquisicao</f:facet>
+                <h:outputText value="#{_veiculo.valorDaAquisicao}"/>
+            </rich:column>
+            <h:column>
+                <f:facet name="header">Action</f:facet>
+                <s:link id="selectveiculo"
+                     value="Select"
+                      view="/Veiculo.xhtml">
+                    <f:param name="veiculoIdVeiculo"
+                            value="#{_veiculo.idVeiculo}"/>
+                    <f:param name="veiculoFrom" value="TipoCombustivel"/>
+                </s:link>
+            </h:column>
+        </rich:dataTable>
+
+    </h:form>
+
+    <div class="actionButtons">
+        <s:button
+               value="Add veiculo"
+                view="/VeiculoEdit.xhtml">
+            <f:param name="tipoCombustivelIdCombustivel"
+                    value="#{tipoCombustivelHome.instance.idCombustivel}"/>
+            <f:param name="veiculoFrom" value="TipoCombustivel"/>
+        </s:button>
+    </div>
+    </rich:tab>
+
+    <rich:tab>
+        <f:facet name="label">
+            <h:panelGroup><h:graphicImage value="/img/onetomany.gif" style="vertical-align: middle; padding-right: 4px;"/>Veiculos_1</h:panelGroup>
+        </f:facet>
+    <h:form styleClass="association" id="veiculos_1Children">
+
+        <h:outputText value="There are no veiculos_1 associated with this tipoCombustivel."
+                   rendered="#{empty tipoCombustivelHome.veiculos_1}"/>
+
+        <rich:dataTable value="#{tipoCombustivelHome.veiculos_1}"
+                       var="_veiculo"
+                  rendered="#{not empty tipoCombustivelHome.veiculos_1}"
+                rowClasses="rvgRowOne,rvgRowTwo"
+                        id="veiculos_1Table">
+            <rich:column sortBy="#{_veiculo.idVeiculo}">
+                <f:facet name="header">Id veiculo</f:facet>
+                <h:outputText value="#{_veiculo.idVeiculo}"/>
+            </rich:column>
+            <rich:column sortBy="#{_veiculo.adquiridoDe}">
+                <f:facet name="header">Adquirido de</f:facet>
+                <h:outputText value="#{_veiculo.adquiridoDe}"/>
+            </rich:column>
+            <rich:column sortBy="#{_veiculo.anoFabricacao}">
+                <f:facet name="header">Ano fabricacao</f:facet>
+                <h:outputText value="#{_veiculo.anoFabricacao}"/>
+            </rich:column>
+            <rich:column sortBy="#{_veiculo.anoModelo}">
+                <f:facet name="header">Ano modelo</f:facet>
+                <h:outputText value="#{_veiculo.anoModelo}"/>
+            </rich:column>
+            <rich:column sortBy="#{_veiculo.chassi}">
+                <f:facet name="header">Chassi</f:facet>
+                <h:outputText value="#{_veiculo.chassi}"/>
+            </rich:column>
+            <rich:column sortBy="#{_veiculo.codRenavam}">
+                <f:facet name="header">Cod renavam</f:facet>
+                <h:outputText value="#{_veiculo.codRenavam}"/>
+            </rich:column>
+            <rich:column sortBy="#{_veiculo.dataCadastro}">
+                <f:facet name="header">Data cadastro</f:facet>
+                <h:outputText value="#{_veiculo.dataCadastro}">
+                    <s:convertDateTime type="date" dateStyle="short"/>
+                </h:outputText>
+            </rich:column>
+            <rich:column sortBy="#{_veiculo.dataDeAquisicao}">
+                <f:facet name="header">Data de aquisicao</f:facet>
+                <h:outputText value="#{_veiculo.dataDeAquisicao}">
+                    <s:convertDateTime type="date" dateStyle="short"/>
+                </h:outputText>
+            </rich:column>
+            <rich:column sortBy="#{_veiculo.idServidor}">
+                <f:facet name="header">Id servidor</f:facet>
+                <h:outputText value="#{_veiculo.idServidor}"/>
+            </rich:column>
+            <rich:column sortBy="#{_veiculo.modalidadeAquisicao}">
+                <f:facet name="header">Modalidade aquisicao</f:facet>
+                <h:outputText value="#{_veiculo.modalidadeAquisicao}"/>
+            </rich:column>
+            <rich:column sortBy="#{_veiculo.numPatrimonio}">
+                <f:facet name="header">Num patrimonio</f:facet>
+                <h:outputText value="#{_veiculo.numPatrimonio}"/>
+            </rich:column>
+            <rich:column sortBy="#{_veiculo.observacao}">
+                <f:facet name="header">Observacao</f:facet>
+                <h:outputText value="#{_veiculo.observacao}"/>
+            </rich:column>
+            <rich:column sortBy="#{_veiculo.placaAnterior}">
+                <f:facet name="header">Placa anterior</f:facet>
+                <h:outputText value="#{_veiculo.placaAnterior}"/>
+            </rich:column>
+            <rich:column sortBy="#{_veiculo.placaAtual}">
+                <f:facet name="header">Placa atual</f:facet>
+                <h:outputText value="#{_veiculo.placaAtual}"/>
+            </rich:column>
+            <rich:column sortBy="#{_veiculo.potencia}">
+                <f:facet name="header">Potencia</f:facet>
+                <h:outputText value="#{_veiculo.potencia}"/>
+            </rich:column>
+            <rich:column sortBy="#{_veiculo.valorDaAquisicao}">
+                <f:facet name="header">Valor da aquisicao</f:facet>
+                <h:outputText value="#{_veiculo.valorDaAquisicao}"/>
+            </rich:column>
+            <h:column>
+                <f:facet name="header">Action</f:facet>
+                <s:link id="selectveiculo"
+                     value="Select"
+                      view="/Veiculo.xhtml">
+                    <f:param name="veiculoIdVeiculo"
+                            value="#{_veiculo.idVeiculo}"/>
+                    <f:param name="veiculoFrom" value="TipoCombustivel"/>
+                </s:link>
+            </h:column>
+        </rich:dataTable>
+
+    </h:form>
+
+    <div class="actionButtons">
+        <s:button
+               value="Add veiculo"
+                view="/VeiculoEdit.xhtml">
+            <f:param name="tipoCombustivelIdCombustivel"
+                    value="#{tipoCombustivelHome.instance.idCombustivel}"/>
+            <f:param name="veiculoFrom" value="TipoCombustivel"/>
+        </s:button>
+    </div>
+    </rich:tab>
+</rich:tabPanel>
+</ui:define>
+
+</ui:composition>

@@ -1,0 +1,80 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:s="http://jboss.com/products/seam/taglib"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:rich="http://richfaces.org/rich"
+    template="../layout/template.xhtml">
+
+<ui:define name="body">
+
+    <rich:panel>
+        <f:facet name="header">Motorista Details</f:facet>
+
+
+        <s:decorate id="bairro" template="../layout/display.xhtml">
+            <ui:define name="label">Bairro</ui:define>
+            <h:outputText value="#{motoristaHome.instance.bairro}"/>
+        </s:decorate>
+
+        <s:decorate id="cep" template="../layout/display.xhtml">
+            <ui:define name="label">Cep</ui:define>
+            <h:outputText value="#{motoristaHome.instance.cep}"/>
+        </s:decorate>
+
+        <s:decorate id="cnh" template="../layout/display.xhtml">
+            <ui:define name="label">Cnh</ui:define>
+            <h:outputText value="#{motoristaHome.instance.cnh}"/>
+        </s:decorate>
+
+        <s:decorate id="nome" template="../layout/display.xhtml">
+            <ui:define name="label">Nome</ui:define>
+            <h:outputText value="#{motoristaHome.instance.nome}"/>
+        </s:decorate>
+
+        <s:decorate id="num" template="../layout/display.xhtml">
+            <ui:define name="label">Num</ui:define>
+            <h:outputText value="#{motoristaHome.instance.num}"/>
+        </s:decorate>
+
+        <s:decorate id="rua" template="../layout/display.xhtml">
+            <ui:define name="label">Rua</ui:define>
+            <h:outputText value="#{motoristaHome.instance.rua}"/>
+        </s:decorate>
+
+        <s:decorate id="status" template="../layout/display.xhtml">
+            <ui:define name="label">Status</ui:define>
+            <h:outputText value="#{motoristaHome.instance.status}"/>
+        </s:decorate>
+
+        <s:decorate id="telefone" template="../layout/display.xhtml">
+            <ui:define name="label">Telefone</ui:define>
+            <h:outputText value="#{motoristaHome.instance.telefone}"/>
+        </s:decorate>
+
+        <s:decorate id="tipocnh" template="../layout/display.xhtml">
+            <ui:define name="label">Tipocnh</ui:define>
+            <h:outputText value="#{motoristaHome.instance.tipocnh}"/>
+        </s:decorate>
+
+        <div style="clear:both"/>
+
+    </rich:panel>
+
+    <div class="actionButtons">
+
+        <s:button view="/MotoristaEdit.xhtml"
+                    id="edit"
+                 value="Edit"/>
+
+        <s:button view="/#{empty motoristaFrom ? 'MotoristaList' : motoristaFrom}.xhtml"
+                    id="done"
+                 value="Done"/>
+
+    </div>
+
+</ui:define>
+
+</ui:composition>

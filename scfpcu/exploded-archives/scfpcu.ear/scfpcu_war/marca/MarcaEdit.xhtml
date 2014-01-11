@@ -1,0 +1,153 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:s="http://jboss.com/products/seam/taglib"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:a="http://richfaces.org/a4j"
+    xmlns:rich="http://richfaces.org/rich"
+    template="../layout/template.xhtml">
+
+<ui:define name="body">
+
+    <h:form id="marca" styleClass="edit">
+
+        <rich:panel>
+            <f:facet name="header">#{marcaHome.managed ? 'Edit' : 'Add'} Marca</f:facet>
+
+
+
+            <s:decorate id="marcaField" template="../layout/edit.xhtml">
+                <ui:define name="label">Marca</ui:define>
+                <h:inputText id="marca"
+                       required="true"
+                           size="20"
+                      maxlength="20"
+                          value="#{marcaHome.instance.marca}">
+                    <a:support event="onblur" reRender="marcaField" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+            </s:decorate>
+
+
+
+            <div style="clear:both">
+                <span class="required">*</span>
+                required fields
+            </div>
+
+        </rich:panel>
+
+        <div class="actionButtons">
+
+            <h:commandButton id="save"
+                          value="Save"
+                         action="#{marcaHome.persist}"
+                       disabled="#{!marcaHome.wired}"
+                       rendered="#{!marcaHome.managed}"/>
+
+            <h:commandButton id="update"
+                          value="Save"
+                         action="#{marcaHome.update}"
+                       rendered="#{marcaHome.managed}"/>
+
+            <h:commandButton id="delete"
+                          value="Delete"
+                         action="#{marcaHome.remove}"
+                      immediate="true"
+                       rendered="#{marcaHome.managed}"/>
+
+            <s:button id="cancelEdit"
+                   value="Cancel"
+             propagation="end"
+                    view="/Marca.xhtml"
+                rendered="#{marcaHome.managed}"/>
+
+            <s:button id="cancelAdd"
+                   value="Cancel"
+             propagation="end"
+                    view="/#{empty marcaFrom ? 'MarcaList' : marcaFrom}.xhtml"
+                rendered="#{!marcaHome.managed}"/>
+
+        </div>
+    </h:form>
+
+<rich:tabPanel switchType="ajax">
+
+    <rich:tab label="Modelos">
+        <h:form styleClass="association" id="modelosChildren">
+
+            <h:outputText value="There are no modelos associated with this marca."
+                       rendered="#{empty marcaHome.modelos}"/>
+
+            <rich:dataTable value="#{marcaHome.modelos}"
+                           var="_modelo"
+                      rendered="#{not empty marcaHome.modelos}"
+                    rowClasses="rvgRowOne,rvgRowTwo"
+                            id="modelosTable">
+                <rich:column sortBy="#{_modelo.idModelo}">
+                    <f:facet name="header">Id modelo</f:facet>
+                    <h:outputText value="#{_modelo.idModelo}"/>
+                </rich:column>
+                <rich:column sortBy="#{_modelo.modelo}">
+                    <f:facet name="header">Modelo</f:facet>
+                    <h:outputText value="#{_modelo.modelo}"/>
+                </rich:column>
+            </rich:dataTable>
+
+        </h:form>
+
+        <f:subview rendered="#{marcaHome.managed}" id="modelos">
+        <div class="actionButtons">
+            <s:button id="addmodelo"
+                   value="Add modelo"
+                    view="/ModeloEdit.xhtml"
+             propagation="none">
+                 <f:param name="marcaIdMarca"
+                         value="#{marcaHome.instance.idMarca}"/>
+                 <f:param name="modeloFrom" value="Marca"/>
+            </s:button>
+        </div>
+        </f:subview>
+    </rich:tab>
+
+    <rich:tab label="Modelos_1">
+        <h:form styleClass="association" id="modelos_1Children">
+
+            <h:outputText value="There are no modelos_1 associated with this marca."
+                       rendered="#{empty marcaHome.modelos_1}"/>
+
+            <rich:dataTable value="#{marcaHome.modelos_1}"
+                           var="_modelo"
+                      rendered="#{not empty marcaHome.modelos_1}"
+                    rowClasses="rvgRowOne,rvgRowTwo"
+                            id="modelos_1Table">
+                <rich:column sortBy="#{_modelo.idModelo}">
+                    <f:facet name="header">Id modelo</f:facet>
+                    <h:outputText value="#{_modelo.idModelo}"/>
+                </rich:column>
+                <rich:column sortBy="#{_modelo.modelo}">
+                    <f:facet name="header">Modelo</f:facet>
+                    <h:outputText value="#{_modelo.modelo}"/>
+                </rich:column>
+            </rich:dataTable>
+
+        </h:form>
+
+        <f:subview rendered="#{marcaHome.managed}" id="modelos_1">
+        <div class="actionButtons">
+            <s:button id="addmodelo"
+                   value="Add modelo"
+                    view="/ModeloEdit.xhtml"
+             propagation="none">
+                 <f:param name="marcaIdMarca"
+                         value="#{marcaHome.instance.idMarca}"/>
+                 <f:param name="modeloFrom" value="Marca"/>
+            </s:button>
+        </div>
+        </f:subview>
+    </rich:tab>
+</rich:tabPanel>
+</ui:define>
+
+</ui:composition>

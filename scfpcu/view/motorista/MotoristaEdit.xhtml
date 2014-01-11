@@ -1,0 +1,158 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:s="http://jboss.com/products/seam/taglib"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:a="http://richfaces.org/a4j"
+    xmlns:rich="http://richfaces.org/rich"
+    template="../layout/template.xhtml">
+
+<ui:define name="body">
+
+    <h:form id="motorista" styleClass="edit">
+
+        <rich:panel>
+            <f:facet name="header">#{motoristaHome.managed ? 'Edit' : 'Add'} Motorista</f:facet>
+
+
+
+            <s:decorate id="bairroField" template="../layout/edit.xhtml">
+                <ui:define name="label">Bairro</ui:define>
+                <h:inputText id="bairro"
+                           size="50"
+                      maxlength="50"
+                          value="#{motoristaHome.instance.bairro}">
+                    <a:support event="onblur" reRender="bairroField" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+            </s:decorate>
+
+
+            <s:decorate id="cepField" template="../layout/edit.xhtml">
+                <ui:define name="label">Cep</ui:define>
+                <h:inputText id="cep"
+                          value="#{motoristaHome.instance.cep}">
+                    <a:support event="onblur" reRender="cepField" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+            </s:decorate>
+
+
+            <s:decorate id="cnhField" template="../layout/edit.xhtml">
+                <ui:define name="label">Cnh</ui:define>
+                <h:inputText id="cnh"
+                       required="true"
+                          value="#{motoristaHome.instance.cnh}">
+                    <a:support event="onblur" reRender="cnhField" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+            </s:decorate>
+
+
+            <s:decorate id="nomeField" template="../layout/edit.xhtml">
+                <ui:define name="label">Nome</ui:define>
+                <h:inputText id="nome"
+                       required="true"
+                           size="100"
+                      maxlength="100"
+                          value="#{motoristaHome.instance.nome}">
+                    <a:support event="onblur" reRender="nomeField" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+            </s:decorate>
+
+
+            <s:decorate id="numField" template="../layout/edit.xhtml">
+                <ui:define name="label">Num</ui:define>
+                <h:inputText id="num"
+                           size="10"
+                      maxlength="10"
+                          value="#{motoristaHome.instance.num}">
+                    <a:support event="onblur" reRender="numField" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+            </s:decorate>
+
+
+            <s:decorate id="ruaField" template="../layout/edit.xhtml">
+                <ui:define name="label">Rua</ui:define>
+                <h:inputText id="rua"
+                           size="100"
+                      maxlength="100"
+                          value="#{motoristaHome.instance.rua}">
+                    <a:support event="onblur" reRender="ruaField" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+            </s:decorate>
+
+
+            <s:decorate id="statusField" template="../layout/edit.xhtml">
+                <ui:define name="label">Status</ui:define>
+                <h:inputText id="status"
+                       required="true"
+                          value="#{motoristaHome.instance.status}">
+                    <a:support event="onblur" reRender="statusField" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+            </s:decorate>
+
+
+            <s:decorate id="telefoneField" template="../layout/edit.xhtml">
+                <ui:define name="label">Telefone</ui:define>
+                <h:inputText id="telefone"
+                          value="#{motoristaHome.instance.telefone}">
+                    <a:support event="onblur" reRender="telefoneField" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+            </s:decorate>
+
+
+            <s:decorate id="tipocnhField" template="../layout/edit.xhtml">
+                <ui:define name="label">Tipocnh</ui:define>
+                <h:inputText id="tipocnh"
+                       required="true"
+                           size="3"
+                      maxlength="3"
+                          value="#{motoristaHome.instance.tipocnh}">
+                    <a:support event="onblur" reRender="tipocnhField" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+            </s:decorate>
+
+            <div style="clear:both">
+                <span class="required">*</span>
+                required fields
+            </div>
+
+        </rich:panel>
+
+        <div class="actionButtons">
+
+            <h:commandButton id="save"
+                          value="Save"
+                         action="#{motoristaHome.persist}"
+                       disabled="#{!motoristaHome.wired}"
+                       rendered="#{!motoristaHome.managed}"/>
+
+            <h:commandButton id="update"
+                          value="Save"
+                         action="#{motoristaHome.update}"
+                       rendered="#{motoristaHome.managed}"/>
+
+            <h:commandButton id="delete"
+                          value="Delete"
+                         action="#{motoristaHome.remove}"
+                      immediate="true"
+                       rendered="#{motoristaHome.managed}"/>
+
+            <s:button id="cancelEdit"
+                   value="Cancel"
+             propagation="end"
+                    view="/Motorista.xhtml"
+                rendered="#{motoristaHome.managed}"/>
+
+            <s:button id="cancelAdd"
+                   value="Cancel"
+             propagation="end"
+                    view="/#{empty motoristaFrom ? 'MotoristaList' : motoristaFrom}.xhtml"
+                rendered="#{!motoristaHome.managed}"/>
+
+        </div>
+    </h:form>
+
+</ui:define>
+
+</ui:composition>

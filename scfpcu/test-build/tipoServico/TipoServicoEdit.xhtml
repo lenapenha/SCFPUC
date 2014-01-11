@@ -1,0 +1,197 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:s="http://jboss.com/products/seam/taglib"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:a="http://richfaces.org/a4j"
+    xmlns:rich="http://richfaces.org/rich"
+    template="../layout/template.xhtml">
+
+<ui:define name="body">
+
+    <h:form id="tipoServico" styleClass="edit">
+
+        <rich:panel>
+            <f:facet name="header">#{tipoServicoHome.managed ? 'Edit' : 'Add'} Tipo servico</f:facet>
+
+
+
+
+
+            <s:decorate id="servicoField" template="../layout/edit.xhtml">
+                <ui:define name="label">Servico</ui:define>
+                <h:inputText id="servico"
+                       required="true"
+                           size="100"
+                      maxlength="100"
+                          value="#{tipoServicoHome.instance.servico}">
+                    <a:support event="onblur" reRender="servicoField" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+            </s:decorate>
+
+            <div style="clear:both">
+                <span class="required">*</span>
+                required fields
+            </div>
+
+        </rich:panel>
+
+        <div class="actionButtons">
+
+            <h:commandButton id="save"
+                          value="Save"
+                         action="#{tipoServicoHome.persist}"
+                       disabled="#{!tipoServicoHome.wired}"
+                       rendered="#{!tipoServicoHome.managed}"/>
+
+            <h:commandButton id="update"
+                          value="Save"
+                         action="#{tipoServicoHome.update}"
+                       rendered="#{tipoServicoHome.managed}"/>
+
+            <h:commandButton id="delete"
+                          value="Delete"
+                         action="#{tipoServicoHome.remove}"
+                      immediate="true"
+                       rendered="#{tipoServicoHome.managed}"/>
+
+            <s:button id="cancelEdit"
+                   value="Cancel"
+             propagation="end"
+                    view="/TipoServico.xhtml"
+                rendered="#{tipoServicoHome.managed}"/>
+
+            <s:button id="cancelAdd"
+                   value="Cancel"
+             propagation="end"
+                    view="/#{empty tipoServicoFrom ? 'TipoServicoList' : tipoServicoFrom}.xhtml"
+                rendered="#{!tipoServicoHome.managed}"/>
+
+        </div>
+    </h:form>
+
+<rich:tabPanel switchType="ajax">
+
+    <rich:tab label="Gastoses">
+        <h:form styleClass="association" id="gastosesChildren">
+
+            <h:outputText value="There are no gastoses associated with this tipoServico."
+                       rendered="#{empty tipoServicoHome.gastoses}"/>
+
+            <rich:dataTable value="#{tipoServicoHome.gastoses}"
+                           var="_gastos"
+                      rendered="#{not empty tipoServicoHome.gastoses}"
+                    rowClasses="rvgRowOne,rvgRowTwo"
+                            id="gastosesTable">
+                <rich:column sortBy="#{_gastos.idGasto}">
+                    <f:facet name="header">Id gasto</f:facet>
+                    <h:outputText value="#{_gastos.idGasto}"/>
+                </rich:column>
+                <rich:column sortBy="#{_gastos.data}">
+                    <f:facet name="header">Data</f:facet>
+                    <h:outputText value="#{_gastos.data}">
+                        <s:convertDateTime type="date" dateStyle="short"/>
+                    </h:outputText>
+                </rich:column>
+                <rich:column sortBy="#{_gastos.lotado}">
+                    <f:facet name="header">Lotado</f:facet>
+                    <h:outputText value="#{_gastos.lotado}"/>
+                </rich:column>
+                <rich:column sortBy="#{_gastos.odometro}">
+                    <f:facet name="header">Odometro</f:facet>
+                    <h:outputText value="#{_gastos.odometro}"/>
+                </rich:column>
+                <rich:column sortBy="#{_gastos.qtd}">
+                    <f:facet name="header">Qtd</f:facet>
+                    <h:outputText value="#{_gastos.qtd}"/>
+                </rich:column>
+                <rich:column sortBy="#{_gastos.tipoGasto}">
+                    <f:facet name="header">Tipo gasto</f:facet>
+                    <h:outputText value="#{_gastos.tipoGasto}"/>
+                </rich:column>
+                <rich:column sortBy="#{_gastos.valor}">
+                    <f:facet name="header">Valor</f:facet>
+                    <h:outputText value="#{_gastos.valor}"/>
+                </rich:column>
+            </rich:dataTable>
+
+        </h:form>
+
+        <f:subview rendered="#{tipoServicoHome.managed}" id="gastoses">
+        <div class="actionButtons">
+            <s:button id="addgastos"
+                   value="Add gastos"
+                    view="/GastosEdit.xhtml"
+             propagation="none">
+                 <f:param name="tipoServicoIdServico"
+                         value="#{tipoServicoHome.instance.idServico}"/>
+                 <f:param name="gastosFrom" value="TipoServico"/>
+            </s:button>
+        </div>
+        </f:subview>
+    </rich:tab>
+
+    <rich:tab label="Gastoses_1">
+        <h:form styleClass="association" id="gastoses_1Children">
+
+            <h:outputText value="There are no gastoses_1 associated with this tipoServico."
+                       rendered="#{empty tipoServicoHome.gastoses_1}"/>
+
+            <rich:dataTable value="#{tipoServicoHome.gastoses_1}"
+                           var="_gastos"
+                      rendered="#{not empty tipoServicoHome.gastoses_1}"
+                    rowClasses="rvgRowOne,rvgRowTwo"
+                            id="gastoses_1Table">
+                <rich:column sortBy="#{_gastos.idGasto}">
+                    <f:facet name="header">Id gasto</f:facet>
+                    <h:outputText value="#{_gastos.idGasto}"/>
+                </rich:column>
+                <rich:column sortBy="#{_gastos.data}">
+                    <f:facet name="header">Data</f:facet>
+                    <h:outputText value="#{_gastos.data}">
+                        <s:convertDateTime type="date" dateStyle="short"/>
+                    </h:outputText>
+                </rich:column>
+                <rich:column sortBy="#{_gastos.lotado}">
+                    <f:facet name="header">Lotado</f:facet>
+                    <h:outputText value="#{_gastos.lotado}"/>
+                </rich:column>
+                <rich:column sortBy="#{_gastos.odometro}">
+                    <f:facet name="header">Odometro</f:facet>
+                    <h:outputText value="#{_gastos.odometro}"/>
+                </rich:column>
+                <rich:column sortBy="#{_gastos.qtd}">
+                    <f:facet name="header">Qtd</f:facet>
+                    <h:outputText value="#{_gastos.qtd}"/>
+                </rich:column>
+                <rich:column sortBy="#{_gastos.tipoGasto}">
+                    <f:facet name="header">Tipo gasto</f:facet>
+                    <h:outputText value="#{_gastos.tipoGasto}"/>
+                </rich:column>
+                <rich:column sortBy="#{_gastos.valor}">
+                    <f:facet name="header">Valor</f:facet>
+                    <h:outputText value="#{_gastos.valor}"/>
+                </rich:column>
+            </rich:dataTable>
+
+        </h:form>
+
+        <f:subview rendered="#{tipoServicoHome.managed}" id="gastoses_1">
+        <div class="actionButtons">
+            <s:button id="addgastos"
+                   value="Add gastos"
+                    view="/GastosEdit.xhtml"
+             propagation="none">
+                 <f:param name="tipoServicoIdServico"
+                         value="#{tipoServicoHome.instance.idServico}"/>
+                 <f:param name="gastosFrom" value="TipoServico"/>
+            </s:button>
+        </div>
+        </f:subview>
+    </rich:tab>
+</rich:tabPanel>
+</ui:define>
+
+</ui:composition>

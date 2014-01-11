@@ -1,0 +1,83 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:s="http://jboss.com/products/seam/taglib"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:a="http://richfaces.org/a4j"
+    xmlns:rich="http://richfaces.org/rich"
+    template="../layout/template.xhtml">
+
+<ui:define name="body">
+
+    <h:form id="motVeic" styleClass="edit">
+
+        <rich:panel>
+            <f:facet name="header">#{motVeicHome.managed ? 'Edit' : 'Add'} Mot veic</f:facet>
+
+
+
+            <s:decorate id="idMotoristaField" template="../layout/edit.xhtml">
+                <ui:define name="label">Id motorista</ui:define>
+                <h:inputText id="idMotorista"
+                       required="true"
+                          value="#{motVeicHome.instance.idMotorista}">
+                    <a:support event="onblur" reRender="idMotoristaField" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+            </s:decorate>
+
+
+            <s:decorate id="idVeiculoField" template="../layout/edit.xhtml">
+                <ui:define name="label">Id veiculo</ui:define>
+                <h:inputText id="idVeiculo"
+                       required="true"
+                          value="#{motVeicHome.instance.idVeiculo}">
+                    <a:support event="onblur" reRender="idVeiculoField" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+            </s:decorate>
+
+            <div style="clear:both">
+                <span class="required">*</span>
+                required fields
+            </div>
+
+        </rich:panel>
+
+        <div class="actionButtons">
+
+            <h:commandButton id="save"
+                          value="Save"
+                         action="#{motVeicHome.persist}"
+                       disabled="#{!motVeicHome.wired}"
+                       rendered="#{!motVeicHome.managed}"/>
+
+            <h:commandButton id="update"
+                          value="Save"
+                         action="#{motVeicHome.update}"
+                       rendered="#{motVeicHome.managed}"/>
+
+            <h:commandButton id="delete"
+                          value="Delete"
+                         action="#{motVeicHome.remove}"
+                      immediate="true"
+                       rendered="#{motVeicHome.managed}"/>
+
+            <s:button id="cancelEdit"
+                   value="Cancel"
+             propagation="end"
+                    view="/MotVeic.xhtml"
+                rendered="#{motVeicHome.managed}"/>
+
+            <s:button id="cancelAdd"
+                   value="Cancel"
+             propagation="end"
+                    view="/#{empty motVeicFrom ? 'MotVeicList' : motVeicFrom}.xhtml"
+                rendered="#{!motVeicHome.managed}"/>
+
+        </div>
+    </h:form>
+
+</ui:define>
+
+</ui:composition>

@@ -1,0 +1,136 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:s="http://jboss.com/products/seam/taglib"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:rich="http://richfaces.org/rich"
+    template="../layout/template.xhtml">
+
+<ui:define name="body">
+
+    <rich:panel>
+        <f:facet name="header">Marca Details</f:facet>
+
+
+        <s:decorate id="marca" template="../layout/display.xhtml">
+            <ui:define name="label">Marca</ui:define>
+            <h:outputText value="#{marcaHome.instance.marca}"/>
+        </s:decorate>
+
+        <div style="clear:both"/>
+
+    </rich:panel>
+
+    <div class="actionButtons">
+
+        <s:button view="/MarcaEdit.xhtml"
+                    id="edit"
+                 value="Edit"/>
+
+        <s:button view="/#{empty marcaFrom ? 'MarcaList' : marcaFrom}.xhtml"
+                    id="done"
+                 value="Done"/>
+
+    </div>
+
+    <rich:tabPanel switchType="ajax">
+
+    <rich:tab>
+        <f:facet name="label">
+            <h:panelGroup><h:graphicImage value="/img/onetomany.gif" style="vertical-align: middle; padding-right: 4px;"/>Modelos</h:panelGroup>
+        </f:facet>
+    <h:form styleClass="association" id="modelosChildren">
+
+        <h:outputText value="There are no modelos associated with this marca."
+                   rendered="#{empty marcaHome.modelos}"/>
+
+        <rich:dataTable value="#{marcaHome.modelos}"
+                       var="_modelo"
+                  rendered="#{not empty marcaHome.modelos}"
+                rowClasses="rvgRowOne,rvgRowTwo"
+                        id="modelosTable">
+            <rich:column sortBy="#{_modelo.idModelo}">
+                <f:facet name="header">Id modelo</f:facet>
+                <h:outputText value="#{_modelo.idModelo}"/>
+            </rich:column>
+            <rich:column sortBy="#{_modelo.modelo}">
+                <f:facet name="header">Modelo</f:facet>
+                <h:outputText value="#{_modelo.modelo}"/>
+            </rich:column>
+            <h:column>
+                <f:facet name="header">Action</f:facet>
+                <s:link id="selectmodelo"
+                     value="Select"
+                      view="/Modelo.xhtml">
+                    <f:param name="modeloIdModelo"
+                            value="#{_modelo.idModelo}"/>
+                    <f:param name="modeloFrom" value="Marca"/>
+                </s:link>
+            </h:column>
+        </rich:dataTable>
+
+    </h:form>
+
+    <div class="actionButtons">
+        <s:button
+               value="Add modelo"
+                view="/ModeloEdit.xhtml">
+            <f:param name="marcaIdMarca"
+                    value="#{marcaHome.instance.idMarca}"/>
+            <f:param name="modeloFrom" value="Marca"/>
+        </s:button>
+    </div>
+    </rich:tab>
+
+    <rich:tab>
+        <f:facet name="label">
+            <h:panelGroup><h:graphicImage value="/img/onetomany.gif" style="vertical-align: middle; padding-right: 4px;"/>Modelos_1</h:panelGroup>
+        </f:facet>
+    <h:form styleClass="association" id="modelos_1Children">
+
+        <h:outputText value="There are no modelos_1 associated with this marca."
+                   rendered="#{empty marcaHome.modelos_1}"/>
+
+        <rich:dataTable value="#{marcaHome.modelos_1}"
+                       var="_modelo"
+                  rendered="#{not empty marcaHome.modelos_1}"
+                rowClasses="rvgRowOne,rvgRowTwo"
+                        id="modelos_1Table">
+            <rich:column sortBy="#{_modelo.idModelo}">
+                <f:facet name="header">Id modelo</f:facet>
+                <h:outputText value="#{_modelo.idModelo}"/>
+            </rich:column>
+            <rich:column sortBy="#{_modelo.modelo}">
+                <f:facet name="header">Modelo</f:facet>
+                <h:outputText value="#{_modelo.modelo}"/>
+            </rich:column>
+            <h:column>
+                <f:facet name="header">Action</f:facet>
+                <s:link id="selectmodelo"
+                     value="Select"
+                      view="/Modelo.xhtml">
+                    <f:param name="modeloIdModelo"
+                            value="#{_modelo.idModelo}"/>
+                    <f:param name="modeloFrom" value="Marca"/>
+                </s:link>
+            </h:column>
+        </rich:dataTable>
+
+    </h:form>
+
+    <div class="actionButtons">
+        <s:button
+               value="Add modelo"
+                view="/ModeloEdit.xhtml">
+            <f:param name="marcaIdMarca"
+                    value="#{marcaHome.instance.idMarca}"/>
+            <f:param name="modeloFrom" value="Marca"/>
+        </s:button>
+    </div>
+    </rich:tab>
+</rich:tabPanel>
+</ui:define>
+
+</ui:composition>

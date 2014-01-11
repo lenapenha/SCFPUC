@@ -1,0 +1,165 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:s="http://jboss.com/products/seam/taglib"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:rich="http://richfaces.org/rich"
+    template="../layout/template.xhtml">
+
+<ui:define name="body">
+
+    <h:form id="cidadesSearch" styleClass="edit">
+
+        <rich:simpleTogglePanel label="Cidades Search Filter" switchType="ajax">
+
+            <s:decorate template="../layout/display.xhtml">
+                <ui:define name="label">Nome</ui:define>
+                <h:inputText id="nome" value="#{cidadesList.cidades.nome}"/>
+            </s:decorate>
+
+            <s:decorate template="../layout/display.xhtml">
+                <ui:define name="label">Uf</ui:define>
+                <h:inputText id="uf" value="#{cidadesList.cidades.uf}"/>
+            </s:decorate>
+
+            <s:decorate template="../layout/display.xhtml">
+                <ui:define name="label">Match</ui:define>
+                <h:selectOneRadio id="logic" value="#{cidadesList.restrictionLogicOperator}" styleClass="radio">
+                    <f:selectItem itemLabel="All" itemValue="and"/>
+                    <f:selectItem itemLabel="Any" itemValue="or"/>
+                </h:selectOneRadio>
+            </s:decorate>
+
+        </rich:simpleTogglePanel>
+
+        <div class="actionButtons">
+            <h:commandButton id="search" value="Search" action="/CidadesList.xhtml"/>
+            <s:button id="reset" value="Reset" includePageParams="false"/>
+        </div>
+
+    </h:form>
+
+    <rich:panel>
+        <f:facet name="header">Cidades Search Results (#{empty cidadesList.resultList ? 0 : (cidadesList.paginated ? cidadesList.resultCount : cidadesList.resultList.size)})</f:facet>
+    <div class="results" id="cidadesList">
+
+    <h:outputText value="The cidades search returned no results."
+               rendered="#{empty cidadesList.resultList}"/>
+
+    <rich:dataTable id="cidadesList"
+                var="_cidades"
+              value="#{cidadesList.resultList}"
+           rendered="#{not empty cidadesList.resultList}">
+        <h:column>
+            <f:facet name="header">
+                <ui:include src="../layout/sort.xhtml">
+                    <ui:param name="entityList" value="#{cidadesList}"/>
+                    <ui:param name="propertyLabel" value="Id cidade"/>
+                    <ui:param name="propertyPath" value="cidades.idCidade"/>
+                </ui:include>
+            </f:facet>
+            <h:outputText value="#{_cidades.idCidade}"/>
+        </h:column>
+        <h:column>
+            <f:facet name="header">
+                <ui:include src="../layout/sort.xhtml">
+                    <ui:param name="entityList" value="#{cidadesList}"/>
+                    <ui:param name="propertyLabel" value="Estados id"/>
+                    <ui:param name="propertyPath" value="cidades.estados.id"/>
+                </ui:include>
+            </f:facet>
+            <h:outputText value="#{_cidades.estados.id}"/>
+        </h:column>
+        <h:column>
+            <f:facet name="header">
+                <ui:include src="../layout/sort.xhtml">
+                    <ui:param name="entityList" value="#{cidadesList}"/>
+                    <ui:param name="propertyLabel" value="Nome"/>
+                    <ui:param name="propertyPath" value="cidades.nome"/>
+                </ui:include>
+            </f:facet>
+            <h:outputText value="#{_cidades.nome}"/>
+        </h:column>
+        <h:column>
+            <f:facet name="header">
+                <ui:include src="../layout/sort.xhtml">
+                    <ui:param name="entityList" value="#{cidadesList}"/>
+                    <ui:param name="propertyLabel" value="Uf"/>
+                    <ui:param name="propertyPath" value="cidades.uf"/>
+                </ui:include>
+            </f:facet>
+            <h:outputText value="#{_cidades.uf}"/>
+        </h:column>
+        <rich:column styleClass="action">
+            <f:facet name="header">Action</f:facet>
+            <s:link view="/#{empty from ? 'Cidades' : from}.xhtml"
+                   value="#{empty from ? 'View' : 'Select'}"
+             propagation="#{empty from ? 'none' : 'default'}"
+                      id="cidadesViewId">
+                <f:param name="cidadesIdCidade"
+                        value="#{_cidades.idCidade}"/>
+            </s:link>
+            #{' '}
+            <s:link view="/CidadesEdit.xhtml"
+                   value="Edit"
+             propagation="none"
+                      id="cidadesEdit"
+                rendered="#{empty from}">
+                <f:param name="cidadesIdCidade"
+                        value="#{_cidades.idCidade}"/>
+            </s:link>
+        </rich:column>
+    </rich:dataTable>
+
+    </div>
+    </rich:panel>
+
+    <div class="tableControl">
+
+        <s:link view="/CidadesList.xhtml"
+            rendered="#{cidadesList.previousExists}"
+               value="#{messages.left}#{messages.left} First Page"
+                  id="firstPage">
+          <f:param name="firstResult" value="0"/>
+        </s:link>
+
+        <s:link view="/CidadesList.xhtml"
+            rendered="#{cidadesList.previousExists}"
+               value="#{messages.left} Previous Page"
+                  id="previousPage">
+            <f:param name="firstResult"
+                    value="#{cidadesList.previousFirstResult}"/>
+        </s:link>
+
+        <s:link view="/CidadesList.xhtml"
+            rendered="#{cidadesList.nextExists}"
+               value="Next Page #{messages.right}"
+                  id="nextPage">
+            <f:param name="firstResult"
+                    value="#{cidadesList.nextFirstResult}"/>
+        </s:link>
+
+        <s:link view="/CidadesList.xhtml"
+            rendered="#{cidadesList.nextExists}"
+               value="Last Page #{messages.right}#{messages.right}"
+                  id="lastPage">
+            <f:param name="firstResult"
+                    value="#{cidadesList.lastFirstResult}"/>
+        </s:link>
+
+    </div>
+
+    <s:div styleClass="actionButtons" rendered="#{empty from}">
+        <s:button view="/CidadesEdit.xhtml"
+                    id="create"
+           propagation="none"
+                 value="Create cidades">
+            <f:param name="cidadesIdCidade"/>
+        </s:button>
+    </s:div>
+
+</ui:define>
+
+</ui:composition>

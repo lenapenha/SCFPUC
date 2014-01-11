@@ -1,0 +1,185 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:s="http://jboss.com/products/seam/taglib"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:a="http://richfaces.org/a4j"
+    xmlns:rich="http://richfaces.org/rich"
+    template="../layout/template.xhtml">
+
+<ui:define name="body">
+
+    <h:form id="cargo" styleClass="edit">
+
+        <rich:panel>
+            <f:facet name="header">#{cargoHome.managed ? 'Edit' : 'Add'} Cargo</f:facet>
+
+
+
+            <s:decorate id="cargoField" template="../layout/edit.xhtml">
+                <ui:define name="label">Cargo</ui:define>
+                <h:inputText id="cargo"
+                       required="true"
+                           size="30"
+                      maxlength="30"
+                          value="#{cargoHome.instance.cargo}">
+                    <a:support event="onblur" reRender="cargoField" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+            </s:decorate>
+
+
+
+            <div style="clear:both">
+                <span class="required">*</span>
+                required fields
+            </div>
+
+        </rich:panel>
+
+        <div class="actionButtons">
+
+            <h:commandButton id="save"
+                          value="Save"
+                         action="#{cargoHome.persist}"
+                       disabled="#{!cargoHome.wired}"
+                       rendered="#{!cargoHome.managed}"/>
+
+            <h:commandButton id="update"
+                          value="Save"
+                         action="#{cargoHome.update}"
+                       rendered="#{cargoHome.managed}"/>
+
+            <h:commandButton id="delete"
+                          value="Delete"
+                         action="#{cargoHome.remove}"
+                      immediate="true"
+                       rendered="#{cargoHome.managed}"/>
+
+            <s:button id="cancelEdit"
+                   value="Cancel"
+             propagation="end"
+                    view="/Cargo.xhtml"
+                rendered="#{cargoHome.managed}"/>
+
+            <s:button id="cancelAdd"
+                   value="Cancel"
+             propagation="end"
+                    view="/#{empty cargoFrom ? 'CargoList' : cargoFrom}.xhtml"
+                rendered="#{!cargoHome.managed}"/>
+
+        </div>
+    </h:form>
+
+<rich:tabPanel switchType="ajax">
+
+    <rich:tab label="Usuarios">
+        <h:form styleClass="association" id="usuariosChildren">
+
+            <h:outputText value="There are no usuarios associated with this cargo."
+                       rendered="#{empty cargoHome.usuarios}"/>
+
+            <rich:dataTable value="#{cargoHome.usuarios}"
+                           var="_usuario"
+                      rendered="#{not empty cargoHome.usuarios}"
+                    rowClasses="rvgRowOne,rvgRowTwo"
+                            id="usuariosTable">
+                <rich:column sortBy="#{_usuario.idServidor}">
+                    <f:facet name="header">Id servidor</f:facet>
+                    <h:outputText value="#{_usuario.idServidor}"/>
+                </rich:column>
+                <rich:column sortBy="#{_usuario.email}">
+                    <f:facet name="header">Email</f:facet>
+                    <h:outputText value="#{_usuario.email}"/>
+                </rich:column>
+                <rich:column sortBy="#{_usuario.login}">
+                    <f:facet name="header">Login</f:facet>
+                    <h:outputText value="#{_usuario.login}"/>
+                </rich:column>
+                <rich:column sortBy="#{_usuario.nome}">
+                    <f:facet name="header">Nome</f:facet>
+                    <h:outputText value="#{_usuario.nome}"/>
+                </rich:column>
+                <rich:column sortBy="#{_usuario.senha}">
+                    <f:facet name="header">Senha</f:facet>
+                    <h:outputText value="#{_usuario.senha}"/>
+                </rich:column>
+                <rich:column sortBy="#{_usuario.siape}">
+                    <f:facet name="header">Siape</f:facet>
+                    <h:outputText value="#{_usuario.siape}"/>
+                </rich:column>
+            </rich:dataTable>
+
+        </h:form>
+
+        <f:subview rendered="#{cargoHome.managed}" id="usuarios">
+        <div class="actionButtons">
+            <s:button id="addusuario"
+                   value="Add usuario"
+                    view="/UsuarioEdit.xhtml"
+             propagation="none">
+                 <f:param name="cargoIdCargo"
+                         value="#{cargoHome.instance.idCargo}"/>
+                 <f:param name="usuarioFrom" value="Cargo"/>
+            </s:button>
+        </div>
+        </f:subview>
+    </rich:tab>
+
+    <rich:tab label="Usuarios_1">
+        <h:form styleClass="association" id="usuarios_1Children">
+
+            <h:outputText value="There are no usuarios_1 associated with this cargo."
+                       rendered="#{empty cargoHome.usuarios_1}"/>
+
+            <rich:dataTable value="#{cargoHome.usuarios_1}"
+                           var="_usuario"
+                      rendered="#{not empty cargoHome.usuarios_1}"
+                    rowClasses="rvgRowOne,rvgRowTwo"
+                            id="usuarios_1Table">
+                <rich:column sortBy="#{_usuario.idServidor}">
+                    <f:facet name="header">Id servidor</f:facet>
+                    <h:outputText value="#{_usuario.idServidor}"/>
+                </rich:column>
+                <rich:column sortBy="#{_usuario.email}">
+                    <f:facet name="header">Email</f:facet>
+                    <h:outputText value="#{_usuario.email}"/>
+                </rich:column>
+                <rich:column sortBy="#{_usuario.login}">
+                    <f:facet name="header">Login</f:facet>
+                    <h:outputText value="#{_usuario.login}"/>
+                </rich:column>
+                <rich:column sortBy="#{_usuario.nome}">
+                    <f:facet name="header">Nome</f:facet>
+                    <h:outputText value="#{_usuario.nome}"/>
+                </rich:column>
+                <rich:column sortBy="#{_usuario.senha}">
+                    <f:facet name="header">Senha</f:facet>
+                    <h:outputText value="#{_usuario.senha}"/>
+                </rich:column>
+                <rich:column sortBy="#{_usuario.siape}">
+                    <f:facet name="header">Siape</f:facet>
+                    <h:outputText value="#{_usuario.siape}"/>
+                </rich:column>
+            </rich:dataTable>
+
+        </h:form>
+
+        <f:subview rendered="#{cargoHome.managed}" id="usuarios_1">
+        <div class="actionButtons">
+            <s:button id="addusuario"
+                   value="Add usuario"
+                    view="/UsuarioEdit.xhtml"
+             propagation="none">
+                 <f:param name="cargoIdCargo"
+                         value="#{cargoHome.instance.idCargo}"/>
+                 <f:param name="usuarioFrom" value="Cargo"/>
+            </s:button>
+        </div>
+        </f:subview>
+    </rich:tab>
+</rich:tabPanel>
+</ui:define>
+
+</ui:composition>

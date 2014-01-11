@@ -1,0 +1,173 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:s="http://jboss.com/products/seam/taglib"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:a="http://richfaces.org/a4j"
+    xmlns:rich="http://richfaces.org/rich"
+    template="../layout/template.xhtml">
+
+<ui:define name="body">
+
+    <h:form id="estados" styleClass="edit">
+
+        <rich:panel>
+            <f:facet name="header">#{estadosHome.managed ? 'Edit' : 'Add'} Estados</f:facet>
+
+
+
+
+
+            <s:decorate id="nomeField" template="../layout/edit.xhtml">
+                <ui:define name="label">Nome</ui:define>
+                <h:inputText id="nome"
+                       required="true"
+                           size="20"
+                      maxlength="20"
+                          value="#{estadosHome.instance.nome}">
+                    <a:support event="onblur" reRender="nomeField" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+            </s:decorate>
+
+
+            <s:decorate id="ufField" template="../layout/edit.xhtml">
+                <ui:define name="label">Uf</ui:define>
+                <h:inputText id="uf"
+                       required="true"
+                           size="10"
+                      maxlength="10"
+                          value="#{estadosHome.instance.uf}">
+                    <a:support event="onblur" reRender="ufField" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+            </s:decorate>
+
+            <div style="clear:both">
+                <span class="required">*</span>
+                required fields
+            </div>
+
+        </rich:panel>
+
+        <div class="actionButtons">
+
+            <h:commandButton id="save"
+                          value="Save"
+                         action="#{estadosHome.persist}"
+                       disabled="#{!estadosHome.wired}"
+                       rendered="#{!estadosHome.managed}"/>
+
+            <h:commandButton id="update"
+                          value="Save"
+                         action="#{estadosHome.update}"
+                       rendered="#{estadosHome.managed}"/>
+
+            <h:commandButton id="delete"
+                          value="Delete"
+                         action="#{estadosHome.remove}"
+                      immediate="true"
+                       rendered="#{estadosHome.managed}"/>
+
+            <s:button id="cancelEdit"
+                   value="Cancel"
+             propagation="end"
+                    view="/Estados.xhtml"
+                rendered="#{estadosHome.managed}"/>
+
+            <s:button id="cancelAdd"
+                   value="Cancel"
+             propagation="end"
+                    view="/#{empty estadosFrom ? 'EstadosList' : estadosFrom}.xhtml"
+                rendered="#{!estadosHome.managed}"/>
+
+        </div>
+    </h:form>
+
+<rich:tabPanel switchType="ajax">
+
+    <rich:tab label="Cidadeses">
+        <h:form styleClass="association" id="cidadesesChildren">
+
+            <h:outputText value="There are no cidadeses associated with this estados."
+                       rendered="#{empty estadosHome.cidadeses}"/>
+
+            <rich:dataTable value="#{estadosHome.cidadeses}"
+                           var="_cidades"
+                      rendered="#{not empty estadosHome.cidadeses}"
+                    rowClasses="rvgRowOne,rvgRowTwo"
+                            id="cidadesesTable">
+                <rich:column sortBy="#{_cidades.idCidade}">
+                    <f:facet name="header">Id cidade</f:facet>
+                    <h:outputText value="#{_cidades.idCidade}"/>
+                </rich:column>
+                <rich:column sortBy="#{_cidades.nome}">
+                    <f:facet name="header">Nome</f:facet>
+                    <h:outputText value="#{_cidades.nome}"/>
+                </rich:column>
+                <rich:column sortBy="#{_cidades.uf}">
+                    <f:facet name="header">Uf</f:facet>
+                    <h:outputText value="#{_cidades.uf}"/>
+                </rich:column>
+            </rich:dataTable>
+
+        </h:form>
+
+        <f:subview rendered="#{estadosHome.managed}" id="cidadeses">
+        <div class="actionButtons">
+            <s:button id="addcidades"
+                   value="Add cidades"
+                    view="/CidadesEdit.xhtml"
+             propagation="none">
+                 <f:param name="estadosId"
+                         value="#{estadosHome.instance.id}"/>
+                 <f:param name="cidadesFrom" value="Estados"/>
+            </s:button>
+        </div>
+        </f:subview>
+    </rich:tab>
+
+    <rich:tab label="Cidadeses_1">
+        <h:form styleClass="association" id="cidadeses_1Children">
+
+            <h:outputText value="There are no cidadeses_1 associated with this estados."
+                       rendered="#{empty estadosHome.cidadeses_1}"/>
+
+            <rich:dataTable value="#{estadosHome.cidadeses_1}"
+                           var="_cidades"
+                      rendered="#{not empty estadosHome.cidadeses_1}"
+                    rowClasses="rvgRowOne,rvgRowTwo"
+                            id="cidadeses_1Table">
+                <rich:column sortBy="#{_cidades.idCidade}">
+                    <f:facet name="header">Id cidade</f:facet>
+                    <h:outputText value="#{_cidades.idCidade}"/>
+                </rich:column>
+                <rich:column sortBy="#{_cidades.nome}">
+                    <f:facet name="header">Nome</f:facet>
+                    <h:outputText value="#{_cidades.nome}"/>
+                </rich:column>
+                <rich:column sortBy="#{_cidades.uf}">
+                    <f:facet name="header">Uf</f:facet>
+                    <h:outputText value="#{_cidades.uf}"/>
+                </rich:column>
+            </rich:dataTable>
+
+        </h:form>
+
+        <f:subview rendered="#{estadosHome.managed}" id="cidadeses_1">
+        <div class="actionButtons">
+            <s:button id="addcidades"
+                   value="Add cidades"
+                    view="/CidadesEdit.xhtml"
+             propagation="none">
+                 <f:param name="estadosId"
+                         value="#{estadosHome.instance.id}"/>
+                 <f:param name="cidadesFrom" value="Estados"/>
+            </s:button>
+        </div>
+        </f:subview>
+    </rich:tab>
+</rich:tabPanel>
+</ui:define>
+
+</ui:composition>

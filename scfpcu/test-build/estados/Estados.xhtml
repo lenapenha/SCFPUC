@@ -1,0 +1,149 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:s="http://jboss.com/products/seam/taglib"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:rich="http://richfaces.org/rich"
+    template="../layout/template.xhtml">
+
+<ui:define name="body">
+
+    <rich:panel>
+        <f:facet name="header">Estados Details</f:facet>
+
+
+        <s:decorate id="nome" template="../layout/display.xhtml">
+            <ui:define name="label">Nome</ui:define>
+            <h:outputText value="#{estadosHome.instance.nome}"/>
+        </s:decorate>
+
+        <s:decorate id="uf" template="../layout/display.xhtml">
+            <ui:define name="label">Uf</ui:define>
+            <h:outputText value="#{estadosHome.instance.uf}"/>
+        </s:decorate>
+
+        <div style="clear:both"/>
+
+    </rich:panel>
+
+    <div class="actionButtons">
+
+        <s:button view="/EstadosEdit.xhtml"
+                    id="edit"
+                 value="Edit"/>
+
+        <s:button view="/#{empty estadosFrom ? 'EstadosList' : estadosFrom}.xhtml"
+                    id="done"
+                 value="Done"/>
+
+    </div>
+
+    <rich:tabPanel switchType="ajax">
+
+    <rich:tab>
+        <f:facet name="label">
+            <h:panelGroup><h:graphicImage value="/img/onetomany.gif" style="vertical-align: middle; padding-right: 4px;"/>Cidadeses</h:panelGroup>
+        </f:facet>
+    <h:form styleClass="association" id="cidadesesChildren">
+
+        <h:outputText value="There are no cidadeses associated with this estados."
+                   rendered="#{empty estadosHome.cidadeses}"/>
+
+        <rich:dataTable value="#{estadosHome.cidadeses}"
+                       var="_cidades"
+                  rendered="#{not empty estadosHome.cidadeses}"
+                rowClasses="rvgRowOne,rvgRowTwo"
+                        id="cidadesesTable">
+            <rich:column sortBy="#{_cidades.idCidade}">
+                <f:facet name="header">Id cidade</f:facet>
+                <h:outputText value="#{_cidades.idCidade}"/>
+            </rich:column>
+            <rich:column sortBy="#{_cidades.nome}">
+                <f:facet name="header">Nome</f:facet>
+                <h:outputText value="#{_cidades.nome}"/>
+            </rich:column>
+            <rich:column sortBy="#{_cidades.uf}">
+                <f:facet name="header">Uf</f:facet>
+                <h:outputText value="#{_cidades.uf}"/>
+            </rich:column>
+            <h:column>
+                <f:facet name="header">Action</f:facet>
+                <s:link id="selectcidades"
+                     value="Select"
+                      view="/Cidades.xhtml">
+                    <f:param name="cidadesIdCidade"
+                            value="#{_cidades.idCidade}"/>
+                    <f:param name="cidadesFrom" value="Estados"/>
+                </s:link>
+            </h:column>
+        </rich:dataTable>
+
+    </h:form>
+
+    <div class="actionButtons">
+        <s:button
+               value="Add cidades"
+                view="/CidadesEdit.xhtml">
+            <f:param name="estadosId"
+                    value="#{estadosHome.instance.id}"/>
+            <f:param name="cidadesFrom" value="Estados"/>
+        </s:button>
+    </div>
+    </rich:tab>
+
+    <rich:tab>
+        <f:facet name="label">
+            <h:panelGroup><h:graphicImage value="/img/onetomany.gif" style="vertical-align: middle; padding-right: 4px;"/>Cidadeses_1</h:panelGroup>
+        </f:facet>
+    <h:form styleClass="association" id="cidadeses_1Children">
+
+        <h:outputText value="There are no cidadeses_1 associated with this estados."
+                   rendered="#{empty estadosHome.cidadeses_1}"/>
+
+        <rich:dataTable value="#{estadosHome.cidadeses_1}"
+                       var="_cidades"
+                  rendered="#{not empty estadosHome.cidadeses_1}"
+                rowClasses="rvgRowOne,rvgRowTwo"
+                        id="cidadeses_1Table">
+            <rich:column sortBy="#{_cidades.idCidade}">
+                <f:facet name="header">Id cidade</f:facet>
+                <h:outputText value="#{_cidades.idCidade}"/>
+            </rich:column>
+            <rich:column sortBy="#{_cidades.nome}">
+                <f:facet name="header">Nome</f:facet>
+                <h:outputText value="#{_cidades.nome}"/>
+            </rich:column>
+            <rich:column sortBy="#{_cidades.uf}">
+                <f:facet name="header">Uf</f:facet>
+                <h:outputText value="#{_cidades.uf}"/>
+            </rich:column>
+            <h:column>
+                <f:facet name="header">Action</f:facet>
+                <s:link id="selectcidades"
+                     value="Select"
+                      view="/Cidades.xhtml">
+                    <f:param name="cidadesIdCidade"
+                            value="#{_cidades.idCidade}"/>
+                    <f:param name="cidadesFrom" value="Estados"/>
+                </s:link>
+            </h:column>
+        </rich:dataTable>
+
+    </h:form>
+
+    <div class="actionButtons">
+        <s:button
+               value="Add cidades"
+                view="/CidadesEdit.xhtml">
+            <f:param name="estadosId"
+                    value="#{estadosHome.instance.id}"/>
+            <f:param name="cidadesFrom" value="Estados"/>
+        </s:button>
+    </div>
+    </rich:tab>
+</rich:tabPanel>
+</ui:define>
+
+</ui:composition>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<page xmlns="http://jboss.com/products/seam/pages"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://jboss.com/products/seam/pages http://jboss.com/products/seam/pages-2.2.xsd">
+
+   <param name="firstResult" value="#{veiculoList.firstResult}"/>
+   <param name="sort" value="#{veiculoList.orderColumn}"/>
+   <param name="dir" value="#{veiculoList.orderDirection}"/>
+   <param name="logic" value="#{veiculoList.restrictionLogicOperator}"/>
+
+   <param name="from"/>
+   <param name="adquiridoDe" value="#{veiculoList.veiculo.adquiridoDe}"/>
+   <param name="chassi" value="#{veiculoList.veiculo.chassi}"/>
+   <param name="modalidadeAquisicao" value="#{veiculoList.veiculo.modalidadeAquisicao}"/>
+   <param name="numPatrimonio" value="#{veiculoList.veiculo.numPatrimonio}"/>
+   <param name="observacao" value="#{veiculoList.veiculo.observacao}"/>
+   <param name="placaAnterior" value="#{veiculoList.veiculo.placaAnterior}"/>
+   <param name="placaAtual" value="#{veiculoList.veiculo.placaAtual}"/>
+
+</page>

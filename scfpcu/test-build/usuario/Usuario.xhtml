@@ -1,0 +1,102 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:s="http://jboss.com/products/seam/taglib"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:rich="http://richfaces.org/rich"
+    template="../layout/template.xhtml">
+
+<ui:define name="body">
+
+    <rich:panel>
+        <f:facet name="header">Usuario Details</f:facet>
+
+        <s:decorate id="idServidor" template="../layout/display.xhtml">
+            <ui:define name="label">Id servidor</ui:define>
+            <h:outputText value="#{usuarioHome.instance.idServidor}"/>
+        </s:decorate>
+
+        <s:decorate id="email" template="../layout/display.xhtml">
+            <ui:define name="label">Email</ui:define>
+            <h:outputText value="#{usuarioHome.instance.email}"/>
+        </s:decorate>
+
+        <s:decorate id="login" template="../layout/display.xhtml">
+            <ui:define name="label">Login</ui:define>
+            <h:outputText value="#{usuarioHome.instance.login}"/>
+        </s:decorate>
+
+        <s:decorate id="nome" template="../layout/display.xhtml">
+            <ui:define name="label">Nome</ui:define>
+            <h:outputText value="#{usuarioHome.instance.nome}"/>
+        </s:decorate>
+
+        <s:decorate id="senha" template="../layout/display.xhtml">
+            <ui:define name="label">Senha</ui:define>
+            <h:outputText value="#{usuarioHome.instance.senha}"/>
+        </s:decorate>
+
+        <s:decorate id="siape" template="../layout/display.xhtml">
+            <ui:define name="label">Siape</ui:define>
+            <h:outputText value="#{usuarioHome.instance.siape}"/>
+        </s:decorate>
+
+        <div style="clear:both"/>
+
+    </rich:panel>
+
+    <div class="actionButtons">
+
+        <s:button view="/UsuarioEdit.xhtml"
+                    id="edit"
+                 value="Edit"/>
+
+        <s:button view="/#{empty usuarioFrom ? 'UsuarioList' : usuarioFrom}.xhtml"
+                    id="done"
+                 value="Done"/>
+
+    </div>
+
+    <rich:tabPanel switchType="ajax">
+
+    <rich:tab>
+        <f:facet name="label">
+            <h:panelGroup><h:graphicImage value="/img/manytoone.gif" style="vertical-align: middle; padding-right: 4px;"/>Cargo</h:panelGroup>
+        </f:facet>
+    <div class="association" id="cargoParent">
+
+        <h:outputText value="There is no cargo associated with this usuario."
+                   rendered="#{usuarioHome.instance.cargo == null}"/>
+
+        <rich:dataTable var="_cargo"
+                   value="#{usuarioHome.instance.cargo}"
+                rendered="#{usuarioHome.instance.cargo != null}"
+              rowClasses="rvgRowOne,rvgRowTwo"
+                      id="cargoTable">
+            <h:column>
+                <f:facet name="header">Id cargo</f:facet>
+                <h:outputText value="#{_cargo.idCargo}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Cargo</f:facet>
+                <h:outputText value="#{_cargo.cargo}"/>
+            </h:column>
+            <h:column styleClass="action">
+                <f:facet name="header">Action</f:facet>
+                <s:link id="viewcargo"
+                     value="View"
+                      view="/Cargo.xhtml">
+                    <f:param name="cargoIdCargo"
+                           value="#{_cargo.idCargo}"/>
+                </s:link>
+            </h:column>
+        </rich:dataTable>
+
+    </div>
+    </rich:tab>
+</rich:tabPanel>
+</ui:define>
+
+</ui:composition>

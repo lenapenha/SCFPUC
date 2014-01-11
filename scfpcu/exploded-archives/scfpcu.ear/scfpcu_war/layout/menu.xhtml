@@ -1,0 +1,133 @@
+<rich:toolBar
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:s="http://jboss.com/products/seam/taglib"
+    xmlns:rich="http://richfaces.org/rich">
+    <rich:toolBarGroup>
+        <h:outputText value="#{projectName}:"/>
+        <s:link id="menuHomeId" view="/home.xhtml" value="Home" propagation="none"/>
+    </rich:toolBarGroup>
+    <rich:dropDownMenu showDelay="250" hideDelay="0" submitMode="none">
+        <f:facet name="label">Browse data</f:facet>
+	<rich:menuItem>
+    	<s:link view="/ModeloList.xhtml"
+           	value="Modelo List"
+           	id="ModeloId"
+			includePageParams="false"
+     		propagation="none"/>
+     </rich:menuItem>
+	<rich:menuItem>
+    	<s:link view="/EntidadeList.xhtml"
+           	value="Entidade List"
+           	id="EntidadeId"
+			includePageParams="false"
+     		propagation="none"/>
+     </rich:menuItem>
+	<rich:menuItem>
+    	<s:link view="/MotVeicList.xhtml"
+           	value="MotVeic List"
+           	id="MotVeicId"
+			includePageParams="false"
+     		propagation="none"/>
+     </rich:menuItem>
+	<rich:menuItem>
+    	<s:link view="/TipoCombustivelList.xhtml"
+           	value="TipoCombustivel List"
+           	id="TipoCombustivelId"
+			includePageParams="false"
+     		propagation="none"/>
+     </rich:menuItem>
+	<rich:menuItem>
+    	<s:link view="/EstadosList.xhtml"
+           	value="Estados List"
+           	id="EstadosId"
+			includePageParams="false"
+     		propagation="none"/>
+     </rich:menuItem>
+	<rich:menuItem>
+    	<s:link view="/GrupoList.xhtml"
+           	value="Grupo List"
+           	id="GrupoId"
+			includePageParams="false"
+     		propagation="none"/>
+     </rich:menuItem>
+	<rich:menuItem>
+    	<s:link view="/TipoServicoList.xhtml"
+           	value="TipoServico List"
+           	id="TipoServicoId"
+			includePageParams="false"
+     		propagation="none"/>
+     </rich:menuItem>
+	<rich:menuItem>
+    	<s:link view="/UsuarioList.xhtml"
+           	value="Usuario List"
+           	id="UsuarioId"
+			includePageParams="false"
+     		propagation="none"/>
+     </rich:menuItem>
+	<rich:menuItem>
+    	<s:link view="/CargoList.xhtml"
+           	value="Cargo List"
+           	id="CargoId"
+			includePageParams="false"
+     		propagation="none"/>
+     </rich:menuItem>
+	<rich:menuItem>
+    	<s:link view="/MarcaList.xhtml"
+           	value="Marca List"
+           	id="MarcaId"
+			includePageParams="false"
+     		propagation="none"/>
+     </rich:menuItem>
+	<rich:menuItem>
+    	<s:link view="/MotoristaList.xhtml"
+           	value="Motorista List"
+           	id="MotoristaId"
+			includePageParams="false"
+     		propagation="none"/>
+     </rich:menuItem>
+	<rich:menuItem>
+    	<s:link view="/CorList.xhtml"
+           	value="Cor List"
+           	id="CorId"
+			includePageParams="false"
+     		propagation="none"/>
+     </rich:menuItem>
+	<rich:menuItem>
+    	<s:link view="/EspecieList.xhtml"
+           	value="Especie List"
+           	id="EspecieId"
+			includePageParams="false"
+     		propagation="none"/>
+     </rich:menuItem>
+	<rich:menuItem>
+    	<s:link view="/GastosList.xhtml"
+           	value="Gastos List"
+           	id="GastosId"
+			includePageParams="false"
+     		propagation="none"/>
+     </rich:menuItem>
+	<rich:menuItem>
+    	<s:link view="/VeiculoList.xhtml"
+           	value="Veiculo List"
+           	id="VeiculoId"
+			includePageParams="false"
+     		propagation="none"/>
+     </rich:menuItem>
+	<rich:menuItem>
+    	<s:link view="/CidadesList.xhtml"
+           	value="Cidades List"
+           	id="CidadesId"
+			includePageParams="false"
+     		propagation="none"/>
+     </rich:menuItem>
+    </rich:dropDownMenu>
+    <!-- @newMenuItem@ -->
+    <rich:toolBarGroup location="right">
+        <h:outputText id="menuWelcomeId" value="signed in as: #{credentials.username}" rendered="#{identity.loggedIn}"/>
+        <s:link id="menuLoginId" view="/login.xhtml" value="Login" rendered="#{not identity.loggedIn}" propagation="none"/>
+        <s:link id="menuLogoutId" view="/home.xhtml" action="#{identity.logout}" value="Logout" rendered="#{identity.loggedIn}" propagation="none"/>
+    </rich:toolBarGroup>
+</rich:toolBar>
